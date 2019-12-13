@@ -87,13 +87,14 @@
 									<c:param name="key" value="${share.key}"></c:param>
 								</c:url>
 								<td>
+									<img src="img/icon/${share.type }.png" alt="logo" style="width:25px;">
 									<a href="Share?key=${share.key }" class="fileName">${share.fileName}</a>&nbsp&nbsp
 								</td>
 								<td>  
 									<a href="${delURL }"><i class="fa fa-ban fa-lg"></i></a>
 								</td>
 								<td>${share.downloads }</td>
-								<td>${share.size/1024 } KB</td>
+								<td>${share.showSize }</td>
 								<td>${share.shareTime }</td>
 							</tr>
 						</c:forEach>
