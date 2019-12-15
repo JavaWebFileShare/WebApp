@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/LoginFilter")
 public class LoginFilter implements Filter {
 
-	private static final String LOGIN_PATH = "LOGIN_PATH"; //显示登录页面  
+	private static final String LOGIN_PATH = "LOGIN_PATH"; 
 	private String loginPath;
 	
     /**
