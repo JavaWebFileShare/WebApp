@@ -1,5 +1,5 @@
 package com.clouddrive.entity;
-
+//
 public class Type {
 	
 	public static String getType(String name) {
