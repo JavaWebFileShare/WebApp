@@ -2,7 +2,7 @@ package com.clouddrive.entity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+//time
 public class CurrentTime {
 	private Date date;
 	private String dateString;
