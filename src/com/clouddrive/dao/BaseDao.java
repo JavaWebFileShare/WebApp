@@ -18,7 +18,7 @@ public abstract class BaseDao {
 	 * 获取数据库连接对象。
 	 */
 	public Connection getConnection() {
-		Connection conn = null;// 数据连接对象
+		Connection conn = null;
 		Context ctx = null;
 		// 获取连接并捕获异常
 		try {
