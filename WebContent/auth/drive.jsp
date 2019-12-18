@@ -4,6 +4,8 @@
 <%@ page import="java.util.*"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!-- test -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +17,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet"
         type="text/css" />
 
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/jquery.zclip.js" type="text/javascript"></script>
 	<script src="js/ajax.js"></script>
 
@@ -107,7 +109,7 @@
 				<div class="card-body">
 					<c:choose>
 						<c:when test="${empty paths }">
-							${path }
+							<%-- ${path } --%>
 						</c:when>
 						
 						<c:otherwise>
@@ -118,7 +120,6 @@
 								<button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#newFolder">
 									<i class="fa fa-folder-o fa-lg"></i> 新建文件夹
 								</button>
-								
 							</div>
 							<ul class="breadcrumb">
 								<c:if test="${lastPath != \"\"}">
@@ -168,10 +169,18 @@
 												<c:param name="path" value="${path}/${file.fileName }"></c:param>
 											</c:url>
 											<td>
-												<img src="img/icon/${file.type }.png" alt="logo" style="width:25px;">
+												<img src="img/icon/${file.type }.png" alt="logo" class="fileIcon">
 												<a href="${folderURL}" class="fileName">${file.fileName}</a>
 											</td>
-											<td> </td>
+											<td>
+												<c:url value="/DelFile" var="delURL">
+													<c:param name="fileName" value="${file.fileName}"></c:param>
+													<c:param name="path" value="${file.path }"></c:param>
+												</c:url>
+												<div class="disabled">
+													<a href="${delURL }" title="删除" ><i class="fa fa-trash-o fa-lg"></i></a>
+												</div>
+											</td>
 											<td>-</td>
 										</c:when>
 										<c:otherwise>
@@ -189,7 +198,7 @@
 												<c:param name="path" value="${file.path }"></c:param>
 											</c:url>
 											<td>
-												<img src="img/icon/${file.type }.png" alt="logo" style="width:25px;">
+												<img src="img/icon/${file.type }.png" alt="logo" class="fileIcon">
 												<a href="${downLoadURL}" class="fileName">${file.fileName}</a>
 											</td>
 											<td>
@@ -217,25 +226,21 @@
 	<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
-				<form action="UpLoad" id="upLoadForm" enctype="multipart/form-data" method="post">
-					<div class="modal-header">
-						<h5 class="modal-title" id="uploadModalLabel">文件上传</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
+				<div class="modal-header">
+					<h5 class="modal-title" id="uploadModalLabel">文件上传</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="file-loading">
+						<input type="file" name="txt_file" multiple  id="uploadFile" />
 					</div>
-					<div class="modal-body">
-						<input type="text" class="pathText" name="path" value="${path }">
-						<div class="file-loading">
-							<input type="file" name="txt_file" id="uploadFile" />
-						</div>
-						<div id="kartik-file-errors"></div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-						<button type="submit" class="btn btn-primary" title="上传">上传</button>
-					</div>
-				</form>
+					<div id="kartik-file-errors"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary refresh">确定</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -252,11 +257,11 @@
 				
 					<div class="modal-body">
 						<input type="text" class="form-control" name="folderName" id="name" placeholder="请输入文件夹名">
-						<input type="text" class="pathText" name="path" value="${path }">
+						<%-- <input type="text" class="pathText" name="path" value="${path }"> --%>
 					</div>
 
 					<div class="modal-footer">
-						<input type="submit" class="btn btn-info" value="提交按钮">
+						<input type="submit" class="btn btn-info" value="新建">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
 					</div>
 				</form>
@@ -289,9 +294,9 @@
 							<p class="text-muted">可以将链接发送给你的QQ等好友</p>
 						</div>
 						<div class="col-sm-3">
-							<div class="alert alert-success">
-								<!-- <strong>成功!</strong> 指定操作成功提示信息。 -->
-							</div>
+							<!-- <div class="alert alert-success">
+								<strong>成功!</strong> 指定操作成功提示信息。
+							</div> -->
 						</div>
 					</div>
 					

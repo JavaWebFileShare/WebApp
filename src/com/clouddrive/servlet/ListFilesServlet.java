@@ -13,27 +13,30 @@ import javax.servlet.http.HttpSession;
 import com.clouddrive.biz.impl.FileListBizImpl;
 import com.clouddrive.entity.FileMessage;
 
+@SuppressWarnings("serial")
 public class ListFilesServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
-		String path = (String)req.getParameter("path");
-		if(path == null) {
-			path = (String)session.getAttribute("path");
-			if(path == null) {
-				System.out.println("找不到路径，默认为root");
-				path = "root";
-			}
-		} else {
-			session.setAttribute("path", path);
-		}
 		
 		String userName = (String)session.getAttribute("name");
 		// 用户名失效，跳转到登录界面
 		if(userName == null) {
 			resp.sendRedirect("home.jsp");
 			return;
+		}
+		
+		String path = (String)req.getParameter("path");
+		if(path == null) {
+			path = (String)session.getAttribute("path");
+			if(path == null) {
+				System.out.println("找不到路径，默认为root");
+				path = "root";
+				session.setAttribute("path", path);
+			}
+		} else {
+			session.setAttribute("path", path);
 		}
 		
 		System.out.println("-----ListFiles:");

@@ -10,11 +10,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.clouddrive.dao.impl.ShareDaoImpl;
-import com.clouddrive.entity.FileMessage;
 
+@SuppressWarnings("serial")
 public class DownLoadServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,8 +23,7 @@ public class DownLoadServlet extends HttpServlet {
 		String url = req.getParameter("url");
 		
 		if(url == null) {
-			System.out.println("path:"+path);
-			System.out.println("下载的文件名："+fileName);
+			// 下载文件
 			url = path+"\\"+fileName;
 		} else {
 			System.out.println("下载分享文件");

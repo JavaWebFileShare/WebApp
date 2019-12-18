@@ -7,14 +7,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.clouddrive.biz.impl.FileManageBizImpl;
+import com.clouddrive.biz.impl.RegisterBizImpl;
 
 /**
- * Servlet implementation class DelFile
+ * Servlet implementation class RegisterServlet
  */
-@WebServlet("/DelFile")
-public class DelFileServlet extends HttpServlet {
+@WebServlet("/RegisterServlet")
+public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -22,19 +23,26 @@ public class DelFileServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		String uuidName = req.getParameter("fileName");
-		String path = req.getParameter("path");
-		System.out.println("delFileServlet:");
+		String userName = req.getParameter("ruserName");
+		String pwd = req.getParameter("rpwd");
 		
-		FileManageBizImpl fileManage = new FileManageBizImpl();
-		if(fileManage.delFile(path, uuidName)) {
-			// 删除成功
-			System.out.println("删除成功");
+		System.out.println("Registering");
+		System.out.println("userName:"+userName);
+		System.out.println("password:"+pwd);
+		
+		RegisterBizImpl registerBizImpl = new RegisterBizImpl();
+		if(registerBizImpl.register(userName, pwd)){
+			HttpSession session = req.getSession();
+			session.setAttribute("name", userName);
+			resp.sendRedirect("ListFiles");
+			return;
+		}else{
+			String message = "用户名不存在或密码错误！";
+			req.setAttribute("message", message);
+			
+			return;
 		}
-		
-		resp.sendRedirect("ListFiles");
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
