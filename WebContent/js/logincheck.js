@@ -1,8 +1,4 @@
-$("#loginForm").validate({
-	submitHandler: function (form) {
-		form.submit();
-	}
-});
+
 $(document).ready(function () {
 	$("#loginForm").validate({
 		rules: {
@@ -18,11 +14,11 @@ $(document).ready(function () {
 		messages: {
 			userName: {
 				required: "请输入用户名",
-				minlength: "用户名至少5个字符"
+				minlength: "用户名至少4个字符"
 			},
 			pwd: {
 				required: "请输入密码",
-				minlength: "密码长度不能小于 8 个字母"
+				minlength: "密码长度不能小于4 个字母"
 			}
 		},
 		errorElement: "em",
@@ -61,3 +57,8 @@ $(document).ready(function () {
 		}
 	})
 })
+$("#loginForm").validate({
+	submitHandler: function (form) {
+		form.submit();
+	}
+});

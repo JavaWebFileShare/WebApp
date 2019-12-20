@@ -7,44 +7,41 @@
 <head>
 	<meta charset="UTF-8">
 	<title>CloudDrive</title>
-
-	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
- 	<script src="js/jquery-3.2.1.min.js"></script>
-	<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script> 
-	<script src="https://cdn.bootcss.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-
-	<link href="css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="/themes/fa/theme.min.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-
-	<script src="js/fileinput.min.js" type="text/javascript"></script>
-	<script src="themes/fa/theme.min.js" type="text/javascript"></script>
-	<script src="js/main.js" type="text/javascript"></script>
-	<script src="js/locales/zh.js" type="text/javascript"></script>
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/ajax.js"></script>
 	<script src="js/jquery.validate.min.js" type="text/javascript"></script>
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" type="text/javascript"></script>
+	<!-- Font Awesome -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css" />
+	<!-- <script src="themes/fa/theme.js" type="text/javascript"></script> -->
+	<!--  -->
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/checkbox.css">
+   	<script src="js/mkfoldercheck.js" type="text/javascript"></script>
 	<script src="js/signupcheck.js" type="text/javascript"></script>
 	<script src="js/logincheck.js" type="text/javascript"></script>
+	<script src="js/home.js" type="text/javascript"></script>
 </head>
 
 <body>
 	<nav class="navbar navbar-expand-sm main-navigation">
 		<div class="container">
 			<a class="navbar-brand" href="#">
-				<img src="img/logo.gif" alt="logo" style="width:40px;"> CloudDrive
+				<img src="img/logo.png" alt="logo" class="logo"> 
+				CloudDrive
 			</a>
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link nav-current" href="home.jsp">首页</a>
+					<a class="nav-link nav-current" href="Home">首页</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="ListFiles">网盘</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="ShareManage">分享</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">收件夹</a>
+					<a class="nav-link" href="ShareManage">我的分享</a>
 				</li>
 				<c:choose>
 					<c:when test="${empty name }">
@@ -65,14 +62,14 @@
 					<c:otherwise>
 						<!-- 登录成功 -->
 						<li class="nav-item">
-							<img src="img/head.jpg" class="rounded-circle" alt="head" style="width:40px;">
+							<img src="img/avatar.gif" class="rounded-circle" alt="head" style="width:40px;">
 						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 								${name }
 							</a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="/CloudDrive/DoLogout">退出登录</a>
+								<a class="dropdown-item" href="DoLogout">退出登录</a>
 							</div>
 						</li>
 					</c:otherwise>
@@ -80,12 +77,71 @@
 			</ul>
 		</div>
 	</nav>
+	
+	<div class="container">
+		<div class="topsharetitle">
+		Top 12 hot shares
+		</div>
+		<div class="row">
+			<c:forEach var="share" items="${shares}">
+				<div class="card-container col-sm-4">
+					<div class="card">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-xl-3"></div>
+								<div class="col-xl-6" >
+									<img  class="home_icon" src="img/icon/${share.type }.png" > 
+								</div>
+							</div>
+							<div class="row">
+								<!-- <div class="col-sm-1"></div> -->
+								<div class="col-sm-12">
+									<div class="row" style="padding-top:15px">
+										<div class="col-sm-3">
+											文件名 
+										</div>
+										<div class="col-sm-9 ellipsis">
+											<a href="Share?key=${share.key }" target="_blank" class="fileName" title="${share.fileName}">${share.fileName}</a>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-3">
+											热度 
+										</div>
+										<div class="col-sm-9">
+											${share.downloads }
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-3">
+											大小
+										</div>
+										<div class="col-sm-9">
+											${share.showSize }
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-3">
+											分享者
+										</div>
+										<div class="col-sm-9">
+											${share.user }
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>	
+					</div>	
+				</div> <!--card-container -->	
+			</c:forEach>
+		</div>	
+	</div>
+	
+	<!-- 登录模态框  -->
 	<div class="modal fade" id="login">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<!-- 模态框头部 -->
 				<form class="form-horizontal" id="loginForm" method="post" action="DoLogin" role="form">
-					<!-- 模态框主体 -->
 				    <div class="row">
 				        <div class="col-md-offset-6 col-md-12">
 							<span class="heading">用户登录</span>
@@ -103,7 +159,7 @@
 									<input type="checkbox" value="None" id="checkbox1" name="check"/>
 									<label for="checkbox1"></label>
 								</div>
-								<span class="text">记住我</span>
+								<span class="text">记住用户名</span>
 								<!--<button type="submit" class="btn btn-default">登录</button>-->
 							</div>
 				        </div>
@@ -112,11 +168,19 @@
 					<div class="modal-footer">
 						<input type="submit" class="btn btn-primary" value="登录">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-					</div>	 
+						 
+					</div>
+					<c:if test="${not empty message }">
+						<div class="alert alert-danger" id="loginError">
+							<strong>${message }</strong>
+						</div>	
+					</c:if>
 				</form>
 			</div>
 		</div>
 	</div>
+	
+	<!-- 注册模态框  -->
 	<div class="modal fade" id="signup">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -146,138 +210,14 @@
 						<input type="submit" class="btn btn-primary" value="注册">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
 					</div>
-				</form>	 
+					<c:if test="${not empty rmessage }">
+						<div class="alert alert-danger" id="registerError">
+							<strong>${rmessage }</strong> 
+						</div>	
+					</c:if>
+				</form>
 			</div>
 		</div>
 	</div>
-	<div class="container">
-		<div class="row">
-			<div class="card-container col-sm-4">
-				<div class="card">
-					<div class="card-body">
-						<div class="row">
-							<div class="card col-sm-4">
-								<img src="img/logo.gif" alt="logo" style="width:40px;"> 
-							</div>	
-							<div class="card col-sm-8">
-								<div class="row">
-									<div class=" col-sm-6">
-										<div>文件名:</div>
-										<div>大小:</div>
-										<div>热度:</div>
-									</div>
-									<div class=" col-sm-6">
-										<div>hello.c</div>
-										<div>1024kb</div>
-										<div>9000</div>
-									</div>		
-								</div>	
-							</div>
-							
-						</div>
-					</div>	
-				</div>
-			</div>
-			
-			<div class="card-container col-sm-4">
-				<div class="card">
-					<div class="card-body">
-						<div class="row">
-							<div class="card col-sm-4">
-								<img src="img/logo.gif" alt="logo" style="width:40px;"> 
-							</div>	
-							<div class="card col-sm-8">
-								<div class="row">
-									<div class=" col-sm-6">
-										<div>文件名:</div>
-										<div>大小:</div>
-										<div>热度:</div>
-									</div>
-									<div class=" col-sm-6">
-										<div>hello.c</div>
-										<div>1024kb</div>
-										<div>9000</div>
-									</div>		
-								</div>	
-							</div>
-							
-						</div>
-					</div>	
-				</div>
-			</div>
-			<div class="card-container col-sm-4">
-				<div class="card">
-					<div class="card-body">
-						<div class="row">
-							<div class="card col-sm-4">
-								<img src="img/logo.gif" alt="logo" style="width:40px;"> 
-							</div>	
-							<div class="card col-sm-8">
-								<div class="row">
-									<div class=" col-sm-6">
-										<div>文件名:</div>
-										<div>大小:</div>
-										<div>热度:</div>
-									</div>
-									<div class=" col-sm-6">
-										<div>hello.c</div>
-										<div>1024kb</div>
-										<div>9000</div>
-									</div>		
-								</div>	
-							</div>
-							
-						</div>
-					</div>	
-				</div>
-			</div>
-			<div class="card-container col-sm-4">
-				<div class="card">
-					<div class="card-body">
-						<div class="row">
-							<div class="card col-sm-4">
-								<img src="img/logo.gif" alt="logo" style="width:40px;"> 
-							</div>	
-							<div class="card col-sm-8">
-								<div class="row">
-									<div class=" col-sm-6">
-										<div>文件名:</div>
-										<div>大小:</div>
-										<div>热度:</div>
-									</div>
-									<div class=" col-sm-6">
-										<div>hello.c</div>
-										<div>1024kb</div>
-										<div>9000</div>
-									</div>		
-								</div>	
-							</div>
-							
-						</div>
-					</div>	
-				</div>
-			</div>
-			
-			
-		</div>
-	</div>
-	
 </body>
-
 </html>
-
-
-<!-- <form method="post" action="DoLogin">
-  		<table>
-  			<tr>
-  				<td>用户名:</td><td><input type="text" id="userName" name="userName"></td>
-  			</tr>
-  			<tr>
-  				<td>密码:</td><td><input type="password" id="pwd" name="pwd"></td>
-  			</tr>
-  			<tr><td><span id="errorInfo"></span></td></tr>
-  			<tr>
-  				<td><input type="submit" value="登录"></td>
-  			</tr>
-  		</table>
-  	</form> -->

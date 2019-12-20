@@ -26,6 +26,12 @@ public class FileListBizImpl implements FileListBiz {
 					for (FileMessage file : fileDaoImpl.findFilesByTypeAndUser("ppt", userName)) {
 						files.add(file);
 					}
+					for (FileMessage file : fileDaoImpl.findFilesByTypeAndUser("pdf", userName)) {
+						files.add(file);
+					}
+					for (FileMessage file : fileDaoImpl.findFilesByTypeAndUser("txt", userName)) {
+						files.add(file);
+					}
 				} else {
 					files = fileDaoImpl.findFilesByTypeAndUser(type, userName);
 				}
@@ -36,9 +42,9 @@ public class FileListBizImpl implements FileListBiz {
 	}
 
 	@Override
-	public Vector<FileMessage> getFilesByPath(String path) {
+	public Vector<FileMessage> getFilesByPathAndUser(String path, String userName) {
 		FileDaoImpl fileDaoImpl = new FileDaoImpl();
-		Vector<FileMessage> files = fileDaoImpl.findFilesByPath(path); 
+		Vector<FileMessage> files = fileDaoImpl.findFilesByPathAndUser(path, userName); 
 		return files;
 	}
 
