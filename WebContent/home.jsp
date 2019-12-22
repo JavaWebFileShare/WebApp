@@ -47,16 +47,10 @@
 					<c:when test="${empty name }">
 						<!-- 未登录 -->
 						<li class="nav-item">
-							&nbsp&nbsp&nbsp
+							<button type="button" class="btn btn-primary nav-button" data-toggle="modal" data-target="#login">登录 </button>
 						</li>
 						<li class="nav-item">
-							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login">登录 </button>
-						</li>
-						<li class="nav-item">	
-							&nbsp&nbsp&nbsp
-						</li>
-						<li class="nav-item">
-							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signup">注册 </button>
+							<button type="button" class="btn btn-primary nav-button" data-toggle="modal" data-target="#signup">注册 </button>
 						</li>
 					</c:when>
 					<c:otherwise>
@@ -156,7 +150,7 @@
 							</div>
 							<div class="form-group">
 								<div class="main-checkbox">
-									<input type="checkbox" value="None" id="checkbox1" name="check"/>
+									<input type="checkbox" value="None" id="checkbox1" name="isSave"/>
 									<label for="checkbox1"></label>
 								</div>
 								<span class="text">记住用户名</span>
