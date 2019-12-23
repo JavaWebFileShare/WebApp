@@ -14,9 +14,7 @@ public abstract class BaseDao {
 	public static String sqlDialect;
 	public static String dataSource;
 	
-	/**
-	 * 获取数据库连接对象。
-	 */
+
 	public Connection getConnection() {
 		Connection conn = null;
 		Context ctx = null;
